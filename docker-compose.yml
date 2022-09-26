@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - .pg_data:/opt/pgsql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /opt/pgsql/data
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - .rabbit_data:/var/lib/rabbitmq
+        
+
