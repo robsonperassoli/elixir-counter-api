@@ -46,7 +46,8 @@ defmodule Cap.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:broadway, "~> 1.0"},
       {:broadway_rabbitmq, "~> 0.7"},
-      {:amqp, "~> 3.1"},
+      {:amqp, "~> 1.1"},
+      {:ex_rabbit_pool, "~> 1.0.3"},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end

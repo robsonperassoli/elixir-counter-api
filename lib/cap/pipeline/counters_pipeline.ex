@@ -18,7 +18,7 @@ defmodule Cap.CountersPipeline do
         default: [concurrency: 1]
       ],
       batchers: [
-        default: [batch_size: @batch_size, batch_timeout: 2_000]
+        default: [batch_size: @batch_size, batch_timeout: 6_000]
       ]
     ]
 
@@ -38,9 +38,13 @@ defmodule Cap.CountersPipeline do
   end
 
   def enqueue(key, value) when is_binary(key) and is_integer(value) do
-    with {:ok, chan} <- AMQP.Application.get_channel(:default) do
-      AMQP.Basic.publish(chan, "", @producer_queue_name, new_message(key, value))
-    end
+    # with {:ok, chan} <- AMQP.Application.get_channel(:default) do
+    #   AMQP.Basic.publish(chan, "", @producer_queue_name, new_message(key, value))
+    # end
+
+    ExRabbitPool.with_channel(:publisher_pool, fn {:ok, channel} ->
+      AMQP.Basic.publish(channel, "", @producer_queue_name, new_message(key, value))
+    end)
   end
 
   def enqueue(_, _), do: {:error, :invalid_values}

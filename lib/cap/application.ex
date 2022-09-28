@@ -16,6 +16,7 @@ defmodule Cap.Application do
       {Phoenix.PubSub, name: Cap.PubSub},
       # Start the Endpoint (http/https)
       CapWeb.Endpoint,
+      Cap.PublisherPool,
       Cap.CountersPipeline
     ]
 
